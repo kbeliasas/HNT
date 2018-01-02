@@ -2,9 +2,16 @@
 
 import netsnmp
 
-def getnameofnei():
+ip_add = '192.168.226.152'
+
+def get_nei_name(ip_add):
     oid = netsnmp.VarList(netsnmp.Varbind('.1.3.6.1.4.1.9.9.23.1.2.1.1.6'))
-    res = netsnmp.snmpwalk(oid, Version = 2, DestHost='192.168.226.152', Community='public')
+    res = netsnmp.snmpwalk(oid, Version = 2, DestHost=ip_add, Community='public')
     return res
 
-print getnameofnei()
+def get_ip_add():
+    oid = netsnmp.VarList(netsnmp.Varbind('. 1.3.6.1.4.1.9.9.23.1.2.1.1.4'))
+    res = netsnmp.snmpwalk(oid, Version = 2, DestHost=ip_add, Community='public')
+    return res
+
+print get_nei_name()
