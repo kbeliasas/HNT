@@ -15,3 +15,4 @@ def get_ip_add(ip_add):
     return res
 
 print get_nei_name(ip_add)
+print get_ip_add(ip_add)
