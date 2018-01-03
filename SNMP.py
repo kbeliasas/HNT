@@ -22,15 +22,18 @@ def get_ip_add(ip):
 
 print sys_name(ip)
 print get_nei_name(ip)
+print 'IP addresses'
 print get_ip_add(ip)
 
 device_list = { sys_name(ip) : ip }
+
+print device_list
 
 nei_name = get_nei_name(ip)
 ip_add = get_ip_add(ip)
 
 
 for x in range(0, len(nei_name)):
-    device_list[nei_name[x] = ip_add[x]
+    device_list[nei_name[x]] = ip_add[x]
 
 print device_list 
