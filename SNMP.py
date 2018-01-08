@@ -43,13 +43,13 @@ while (x > -1):
                         x = x + 1
                         y = 0
                         z = 0
-                    elif (len(all_list) <= x + 1): # Jei nebeliko įrenginiu, tai uzbaik.
+                    elif (len(all_list) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
                         x = -2
                         y = -2
                         z = -2
                         break
             elif (all_list[x][y] != tested[z]): # Jei dar netestuotas, tai ...
-                if (len(tested) > z + 1): # Jei dar liko pratestuotu ssrase irenginiu, tai perziurek juos.
+                if (len(tested) > z + 1): # Jei dar liko pratestuotu sarase irenginiu, tai perziurek juos.
                     z = z + 1
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
                     ip = all_list[x][y]
@@ -66,7 +66,7 @@ while (x > -1):
                             x = x + 1
                             y = 0
                             z = 0
-                        elif (len(all_list) <= x + 1): # Jei nebeliko irenginių, tai uzbaik.
+                        elif (len(all_list) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
                             x = -2
                             y = -2
                             z = -2
