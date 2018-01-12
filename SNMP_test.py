@@ -19,3 +19,6 @@ for x in range(0, len(ip_add)):
     device_list.append(ip_add[x])
 all_list = [device_list]
 tested.append(ip)
+
+print "Tested=" +str(tested)
+print "Nei=" + str(all_list)

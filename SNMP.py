@@ -10,17 +10,14 @@ def get_ip_add(ip): # Pasiima kaimynus is irenginio.
     res = netsnmp.snmpwalk(oid, Version = 2, DestHost=ip, Community='public')
     return res
 
+tested = []
+
 
 ip_add = get_ip_add(ip)
-
 device_list = []
-
 for x in range(0, len(ip_add)):
     device_list.append(ip_add[x])
-
 all_list = [device_list]
-
-tested = []
 tested.append(ip)
 
 
