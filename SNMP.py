@@ -2,8 +2,8 @@
 
 import netsnmp
 
-ip = '192.168.226.152' # Pirmas irenginys
-
+# ip = '192.168.226.152' # Pirmas irenginys
+ip = '192.168.50.100'
 
 def get_ip_add(ip): # Pasiima kaimynus is irenginio.
     oid = netsnmp.VarList(netsnmp.Varbind('.1.3.6.1.4.1.9.9.23.1.2.1.1.4'))
