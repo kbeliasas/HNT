@@ -8,7 +8,12 @@ com = 'public'
 for (errorIndication,
      errorStatus,
      errorIndex,
-     varBinds) in nextCmd(SnmpEngine(),CommunityData(com), UdpTransportTarget((ip, 161)), ContextData(), ObjectType(ObjectIdentity('1.0.8802.1.1.2.1.4'))):
+     varBinds) in nextCmd(SnmpEngine(),
+     CommunityData(com),
+     UdpTransportTarget((ip, 161)),
+     ContextData(),
+     ObjectType(ObjectIdentity('1.0.8802.1.1.2.1.4'),
+     lexicographicMode=False)):
 
     if errorIndication:
         print(errorIndication)
