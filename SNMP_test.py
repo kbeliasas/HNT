@@ -5,6 +5,7 @@ from pysnmp.hlapi import *
 ip = '192.168.50.100'
 com = 'public'
 
+
 for (errorIndication,
      errorStatus,
      errorIndex,
@@ -12,7 +13,8 @@ for (errorIndication,
                           CommunityData(com),
                           UdpTransportTarget((ip, 161)),
                           ContextData(),
-                          ObjectType(ObjectIdentity('1.0.8802.1.1.2.1.4.1.1.5'))):
+                          ObjectType(ObjectIdentity('IF-MIB')),
+                          lexicographicMode=False):
 
     if errorIndication:
         print(errorIndication)
@@ -23,4 +25,4 @@ for (errorIndication,
         break
     else:
         for varBind in varBinds:
-            print(' = '.join([x.prettyPrint() for x in varBind])
+            print(' = '.join([x.prettyPrint() for x in varBind]))
