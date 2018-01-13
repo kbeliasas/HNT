@@ -1,24 +1,17 @@
 #!/usr/bin/env python
 
-import netsnmp
+import easysnmp
 
 # ip = '192.168.226.152' # Pirmas irenginys
 ip = '192.168.50.100' # Testuojamas irenginys
+com = 'public'
 
-def get_ip_add(ip): # Pasiima kaimynus is irenginio.
-    oid = netsnmp.VarList(netsnmp.Varbind('.1.3.6.1.4.1.9.9.23.1.2.1.1.4'))
-    res = netsnmp.snmpwalk(oid, Version = 2, DestHost=ip, Community='public')
+
+
+def get_ip_add(ip):
+    session = easysnmp.Session(hostname=ip, version=2, community=com)
+    res = easysnmp.session.get('.1.3.6.1.2.1.1.5.0')
     return res
 
-tested = []
-
-
 ip_add = get_ip_add(ip)
-device_list = []
-for x in range(0, len(ip_add)):
-    device_list.append(ip_add[x])
-all_list = [device_list]
-tested.append(ip)
-
-print "Tested=" +str(tested)
-print "Nei=" + str(all_list)
+print ip_add
