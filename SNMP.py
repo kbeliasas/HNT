@@ -50,7 +50,6 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
 		    ans.append(item.value)
 	    return ans
 	except Exception as e:
-		print e
         ans = []
         ans.append('')
         return ans
