@@ -133,7 +133,6 @@ while (x > -1):
                     z = z + 1
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
                     ip = all_list[x][y]
-                    print ip
                     ip_add = get_ip_add(ip)
                     if (ip_add != ['failed']):
                         port_list = get_id_port(ip)
