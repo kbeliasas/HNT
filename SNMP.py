@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import easysnmp
+import networkx as nx
+import matplotlib.pyplot as plt
 
 # ip = '192.168.226.152' # Pirmas irenginys
 ip = '192.168.50.100'
