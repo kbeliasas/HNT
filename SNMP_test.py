@@ -1,28 +1,20 @@
 #!/usr/bin/env python
 
-from pysnmp.hlapi import *
+import easysnmp
 
-ip = '192.168.50.100'
+# ip = '192.168.226.152' # Pirmas irenginys
+ip = '192.168.50.100' # Testuojamas irenginys
 com = 'public'
 
 
-for (errorIndication,
-     errorStatus,
-     errorIndex,
-     varBinds) in nextCmd(SnmpEngine(),
-                          CommunityData(com),
-                          UdpTransportTarget((ip, 161)),
-                          ContextData(),
-                          ObjectType(ObjectIdentity('IF-MIB')),
-                          lexicographicMode=False):
 
-    if errorIndication:
-        print(errorIndication)
-        break
-    elif errorStatus:
-        print('%s at %s' % (errorStatus.prettyPrint(),
-                            errorIndex and varBinds[int(errorIndex) - 1][0] or '?'))
-        break
-    else:
-        for varBind in varBinds:
-            print(' = '.join([x.prettyPrint() for x in varBind]))
+def get_ip_add(ip):
+    session = easysnmp.Session(hostname=ip, version=2, community=com)
+    res = session.walk('.1.0.8802.1.1.2.1.3.7.1.3')
+    ans = []
+    for item in res:
+        ans.append(item)
+    return ans
+
+ip_add = get_ip_add(ip)
+print ip_add
