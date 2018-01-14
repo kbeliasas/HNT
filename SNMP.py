@@ -31,7 +31,7 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
             c = c + 1
         return ans
     except Exception as e:
-        print 'Something wrong on ip = ' + ip_add
+        print 'Something wrong on ip = ' + ip
         print(e)
 
 tested = []
