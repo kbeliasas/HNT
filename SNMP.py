@@ -90,6 +90,7 @@ tested_names = []
 ip_add = get_ip_add(ip)
 port_list = get_id_port(ip)
 device_list = []
+all_ports = []
 for x in range(0, len(ip_add)):
     device_list.append(ip_add[x])
     all_ports.append(port_list[x])
