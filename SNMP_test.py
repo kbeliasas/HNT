@@ -17,16 +17,20 @@ def get_ip_add(ip):
     c = 0
     for item in temp1:
         a = 0
-        b = 0
+        b = 1
         while a < 4:
             if (item[len(item)-b] == '.'):
                 ans[c].append(item[len(item)-b])
                 a = a + 1
                 b = b + 1
+                print 'a = ' + str(a)
+                print 'b = ' + str(b)
             else:
                 ans[c].append(item[len(item)-b])
                 b = b + 1
+                print 'b = ' + str(b)
         c = c + 1
+        print 'c = ' + str(c)
     return ans
 
 ip_add = get_ip_add(ip)
