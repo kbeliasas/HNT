@@ -134,6 +134,7 @@ while (x > -1):
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
                     ip = all_list[x][y]
                     ip_add = get_ip_add(ip)
+                    print ip_add
                     if (ip_add != 'failed'):
                         port_list = get_id_port(ip)
                         device_list = []
@@ -142,6 +143,7 @@ while (x > -1):
                             all_ports.append(port_list[a])
                         all_list.append(device_list)
                         tested.append(ip)
+                    print ip
                     if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
                     elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
