@@ -42,14 +42,14 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         return ans
 
 def get_id_port(ip): # Pasiima kaimynu sasaju numerius
-	session = easysnmp.Session(hostname=ip, version=2, community=com)
-	try:
-	    res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
-	    ans = []
-	    for item in res:
-		    ans.append(item.value)
-	    return ans
-	except Exception as e:
+    session = easysnmp.Session(hostname=ip, version=2, community=com)
+    try:
+        res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
+        ans = []
+        for item in res:
+            ans.append(item.value)
+        return ans
+    except Exception as e:
         ans = []
         ans.append('')
         return ans
