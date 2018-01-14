@@ -37,11 +37,11 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         print 'Something wrong on ip = ' + ip
         print(e)
         ans = []
-        ans.append('')
+        ans.append('failed')
         failed.append(ip)
         return ans
 
-def get_id_port(ip):
+def get_id_port(ip): # Pasiima kaimynu sasaju numerius
 	session = easysnmp.Session(hostname=ip, version=2, community=com)
 	try:
 	    res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
@@ -50,11 +50,8 @@ def get_id_port(ip):
 		    ans.append(item.value)
 	    return ans
 	except Exception as e:
-		print 'Something wrong on ip = ' + ip
-        print(e)
         ans = []
         ans.append('')
-        failed.append(ip)
         return ans
 
 def draw_topology(graph, labels=None, graph_layout='spectral',
@@ -115,9 +112,9 @@ z = 0
 while (x > -1):
     while (y > -1):
         while (z > -1):
-            print "x = " + str(x)
-            print "y = " + str(y)
-            print "z = " + str(z)
+            #print "x = " + str(x)
+            #print "y = " + str(y)
+            #print "z = " + str(z)
             if (all_list[x][y] == tested[z]): # Jei jau testuotas, tai ...
                 if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                     y = y + 1
@@ -137,13 +134,14 @@ while (x > -1):
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
                     ip = all_list[x][y]
                     ip_add = get_ip_add(ip)
-                    port_list = get_id_port(ip)
-                    device_list = []
-                    for a in range(0, len(ip_add)):
-                        device_list.append(ip_add[a])
-                        all_ports.append(port_list[a])
-                    all_list.append(device_list)
-                    tested.append(ip)
+                    if (ip_add != 'failed'):
+                        port_list = get_id_port(ip)
+                        device_list = []
+                        for a in range(0, len(ip_add)):
+                            device_list.append(ip_add[a])
+                            all_ports.append(port_list[a])
+                        all_list.append(device_list)
+                        tested.append(ip)
                     if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
                     elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
@@ -159,8 +157,6 @@ while (x > -1):
 
 realations = []
 
-print all_ports
-
 
 for x in range(0, len(tested)):
     for y in range(0, len(all_list[x])):
@@ -169,8 +165,6 @@ for x in range(0, len(tested)):
 
 draw_topology(realations,all_ports)
 
-print tested
-print all_list
 print failed
 
 print "end"
