@@ -43,11 +43,19 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
 
 def get_id_port(ip):
 	session = easysnmp.Session(hostname=ip, version=2, community=com)
-	res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
-	ans = []
-	for item in res:
-		ans.append(item.value)
-	return ans
+	try:
+	    res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
+	    ans = []
+	    for item in res:
+		    ans.append(item.value)
+	    return ans
+	except Exception as e:
+		print 'Something wrong on ip = ' + ip
+        print(e)
+        ans = []
+        ans.append('')
+        failed.append(ip)
+        return ans
 
 def draw_topology(graph, labels=None, graph_layout='spectral',
                node_size=1600, node_color='blue', node_alpha=0.3,
