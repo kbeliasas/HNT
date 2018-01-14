@@ -119,7 +119,12 @@ for x in range(0, len(tested)):
         temp = (tested[x], all_list[x][y])
         realations.append(temp)
 
-line_label = map(chr, range(65, 65+len(realations)))
+def lab_make(vari):
+    return vari
+
+list1 = ['a','b','c','d','e','f','g','h']
+
+line_label = map(lab_make, list1)
 
 draw_topology(realations,line_label)
 
