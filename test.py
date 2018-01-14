@@ -15,7 +15,7 @@ def get_ip_add(ip):
         res = ['C']
     return res
 
-def draw_topology(graph, labels=None, graph_layout='shell',
+def draw_topology(graph, labels=None, graph_layout='spectral',
                node_size=1600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
                edge_color='blue', edge_alpha=0.3, edge_tickness=1,
@@ -119,7 +119,9 @@ for x in range(0, len(tested)):
         temp = (tested[x], all_list[x][y])
         realations.append(temp)
 
-draw_topology(realations)
+line_label = map(chr, range(65, 65+len(realations)))
+
+draw_topology(realations,line_label)
 
 print realations
 
