@@ -116,7 +116,8 @@ realations = []
 
 for x in range(0, len(tested)):
     for y in range(0, len(all_list[x])):
-        realations.append(tested[x], all_list[x][y])
+        temp = (tested[x], all_list[x][y])
+        realations.append(temp)
 
 print realations
 
