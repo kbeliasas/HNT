@@ -5,6 +5,7 @@ import easysnmp
 # ip = '192.168.226.152' # Pirmas irenginys
 ip = '192.168.50.100'
 com = 'public'
+failed = []
 
 def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     session = easysnmp.Session(hostname=ip, version=2, community=com)
@@ -34,6 +35,7 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         print 'Something wrong on ip = ' + ip
         print(e)
         ans.append('')
+        failed.append(ip)
         return ans
 
 tested = []
@@ -98,6 +100,6 @@ while (x > -1):
 
 
 print tested
-print device_list
+print all_list
 
 print "end"
