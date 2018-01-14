@@ -71,9 +71,6 @@ def draw_topology(graph, labels=None, graph_layout='spectral',
 
     plt.show()
 
-def lab_make(vari):
-    return vari
-
 
 tested = []
 tested_names = []
