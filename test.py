@@ -15,7 +15,7 @@ def get_ip_add(ip):
         res = ['C']
     return res
 
-def draw_topology(realations, labels=None, graph_layout='shell',
+def draw_topology(graph, labels=None, graph_layout='shell',
                node_size=1600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
                edge_color='blue', edge_alpha=0.3, edge_tickness=1,
@@ -23,7 +23,7 @@ def draw_topology(realations, labels=None, graph_layout='shell',
                text_font='sans-serif'):
     G=nx.Graph()
 
-    for edge in realations:
+    for edge in graph:
         G.add_edge(edge[0], edge[1])
 
     if graph_layout == 'spring':
