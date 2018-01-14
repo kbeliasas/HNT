@@ -119,6 +119,8 @@ for x in range(0, len(tested)):
         temp = (tested[x], all_list[x][y])
         realations.append(temp)
 
+draw_topology(realations)
+
 print realations
 
 
