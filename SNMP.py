@@ -134,6 +134,8 @@ while (x > -1):
                             z = -2
                             break
 
+realations = []
+
 for x in range(0, len(tested)):
     for y in range(0, len(all_list[x])):
         temp = (tested[x], all_list[x][y])
