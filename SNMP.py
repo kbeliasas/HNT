@@ -1,14 +1,34 @@
 #!/usr/bin/env python
 
-import netsnmp
+import easysnmp
 
 # ip = '192.168.226.152' # Pirmas irenginys
 ip = '192.168.50.100'
+com = 'public'
 
-def get_ip_add(ip): # Pasiima kaimynus is irenginio.
-    oid = netsnmp.VarList(netsnmp.Varbind('.1.3.6.1.4.1.9.9.23.1.2.1.1.4'))
-    res = netsnmp.snmpwalk(oid, Version = 2, DestHost=ip, Community='public')
-    return res
+def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
+    session = easysnmp.Session(hostname=ip, version=2, community=com)
+    res = session.walk('.1.0.8802.1.1.2.1.4.2.1.3')
+    ans = []
+    temp1 = []
+    for item in res:
+        temp1.append(item.oid)
+    c = 0
+    for item in temp1:
+        ans.append('')
+        a = 0
+        b = 1
+        while a < 4:
+            if (item[len(item)-b] == '.'):
+                ans[c] = item[len(item)-b] + ans[c]
+                a = a + 1
+                b = b + 1
+            else:
+                ans[c] = item[len(item)-b] + ans[c]
+                b = b + 1
+        ans[c] = ans[c].lstrip('.')
+        c = c + 1
+    return ans
 
 tested = []
 
