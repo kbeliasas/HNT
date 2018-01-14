@@ -135,7 +135,7 @@ while (x > -1):
                     ip = all_list[x][y]
                     print ip
                     ip_add = get_ip_add(ip)
-                    if (ip_add != 'failed'):
+                    if (ip_add != ['failed']):
                         port_list = get_id_port(ip)
                         device_list = []
                         for a in range(0, len(ip_add)):
