@@ -20,15 +20,16 @@ def get_ip_add(ip):
         b = 1
         while a < 4:
             if (item[len(item)-b] == '.'):
-                ans[c] = ans[c] + item[len(item)-b]
+                ans[c] = item[len(item)-b] + ans[c]
                 a = a + 1
                 b = b + 1
                 print 'a = ' + str(a)
                 print 'b = ' + str(b)
             else:
-                ans[c] = ans[c] + item[len(item)-b]
+                ans[c] = item[len(item)-b] + ans[c]
                 b = b + 1
                 print 'b = ' + str(b)
+        ans[c][:-1]
         c = c + 1
         ans.append('')
         print 'c = ' + str(c)
