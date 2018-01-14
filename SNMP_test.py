@@ -13,7 +13,7 @@ def get_ip_add(ip):
     res = session.walk('.1.0.8802.1.1.2.1.4.2.1.3')
     ans = []
     for item in res:
-        ans.append(item)
+        ans.append(item.oid)
     return ans
 
 ip_add = get_ip_add(ip)
