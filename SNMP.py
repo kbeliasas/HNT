@@ -41,6 +41,14 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         failed.append(ip)
         return ans
 
+def get_id_port(ip):
+	session = easysnmp.Session(hostname=ip, version=2, community=com)
+	res = session.walk('.1.0.8802.1.1.2.1.4.1.1.7')
+	ans = []
+	for item in res:
+		ans.append(item.value)
+	return ans
+
 def draw_topology(graph, labels=None, graph_layout='spectral',
                node_size=1600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
@@ -80,9 +88,11 @@ tested_names = []
 
 
 ip_add = get_ip_add(ip)
+port_list = get_id_port(ip)
 device_list = []
 for x in range(0, len(ip_add)):
     device_list.append(ip_add[x])
+    all_ports.append(port_list[x])
 all_list = [device_list]
 tested.append(ip)
 tested_names
@@ -118,9 +128,11 @@ while (x > -1):
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
                     ip = all_list[x][y]
                     ip_add = get_ip_add(ip)
+                    port_list = get_id_port(ip)
                     device_list = []
                     for a in range(0, len(ip_add)):
                         device_list.append(ip_add[a])
+                        all_ports.append(port_list[a])
                     all_list.append(device_list)
                     tested.append(ip)
                     if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
@@ -138,12 +150,15 @@ while (x > -1):
 
 realations = []
 
+print all_ports
+
+
 for x in range(0, len(tested)):
     for y in range(0, len(all_list[x])):
         temp = (tested[x], all_list[x][y])
         realations.append(temp)
 
-draw_topology(realations)
+draw_topology(realations,all_ports)
 
 print tested
 print all_list
