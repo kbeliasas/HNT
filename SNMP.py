@@ -142,6 +142,10 @@ while (x > -1):
                             all_ports.append(port_list[a])
                         all_list.append(device_list)
                         tested.append(ip)
+                    else:
+                        tested.append(ip)
+                        device_list = ['']
+                        all_list.append(device_list)
                     if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
                     elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
