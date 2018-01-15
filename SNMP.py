@@ -54,7 +54,7 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
         ans.append('')
         return ans
 
-def draw_topology(graph, labels=None, graph_layout='spectral',
+def draw_topology(graph, labels=None, graph_layout='shell',
                node_size=1600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
                edge_color='blue', edge_alpha=0.3, edge_tickness=1,
