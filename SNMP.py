@@ -88,7 +88,7 @@ def draw_topology(graph, labels=None, graph_layout='shell',
     plt.show()
 
 
-tested = []
+tested = ['']
 tested_names = []
 
 
@@ -160,6 +160,8 @@ while (x > -1):
                             break
 
 realations = []
+
+del tested[0]
 
 
 for x in range(0, len(tested)):
