@@ -163,6 +163,8 @@ realations = []
 
 del tested[0]
 
+print tested
+
 
 for x in range(0, len(tested)):
     for y in range(0, len(all_list[x])):
