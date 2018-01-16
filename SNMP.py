@@ -144,8 +144,6 @@ while (x > -1):
                         tested.append(ip)
                     else:
                         tested.append(ip)
-                        device_list = ['']
-                        all_list.append(device_list)
                     if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
                     elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
@@ -158,6 +156,30 @@ while (x > -1):
                             y = -2
                             z = -2
                             break
+
+x = 0
+y = 0
+while (x > -1):
+    while (y > -1):
+        if (tested[x] == failed[y]):
+            del tested[x]
+            if (len(tested) <= x):
+                x = -2
+                y = -2
+                break
+            elif (len(tested) > x):
+                y = 0
+        elif (tested[x] != failed[y]):
+            if (len(failed) <= y + 1):
+                if (len(tested) <= x + 1):
+                    y = -2
+                    x = -2
+                    break
+                elif (len(tested) > x + 1):
+                    y = 0
+                    x = x + 1
+            elif (len(failed) > y + 1):
+                y = y + 1
 
 realations = []
 
