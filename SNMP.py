@@ -203,6 +203,7 @@ for x in range(0, len(tested)):
 draw_topology(realations,all_ports_topology)
 
 ip = tested[0]
+new_tested = ['']
 
 ip_add = get_ip_add(ip)
 port_list = get_id_port(ip)
