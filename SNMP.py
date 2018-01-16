@@ -38,7 +38,6 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         print(e)
         ans = []
         ans.append('failed')
-        failed.append(ip)
         return ans
 
 def get_id_port(ip): # Pasiima kaimynu sasaju numerius
@@ -149,6 +148,7 @@ while (x > -1):
                         tested.append(ip)
                     else:
                         tested.append(ip)
+                        failed.append(ip)
                     if (len(device_nei[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
                     elif (len(device_nei[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
@@ -198,16 +198,179 @@ for x in range(0, len(tested)):
         temp = (tested[x], device_nei[x][y])
         realations.append(temp)
 
-all_list = []
-all_list.append(tested)
-all_list.append(device_nei)
-all_list.append(device_nei_ports)
 
-f = open('topology.txt','w')
-f.write(str(all_list)
-f.close()
 
 draw_topology(realations,all_ports_topology)
+
+ip = tested[0]
+
+ip_add = get_ip_add(ip)
+port_list = get_id_port(ip)
+device_list = []
+all_ports_topology = []
+port_list1 = []
+for x in range(0, len(ip_add)):
+    device_list.append(ip_add[x])
+    all_ports_topology.append(port_list[x])
+    port_list1.append(port_list[x])
+new_device_nei = [device_list]
+new_device_nei_ports = [port_list1]
+new_tested.append(ip)
+
+
+a = 1
+while(a > 0):
+    x = 0
+    y = 0
+    z = 0
+    while (x > -1):
+        while (y > -1):
+            while (z > -1):
+                if (new_device_nei[x][y] == new_tested[z]):
+                    if (len(new_device_nei[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
+                        y = y + 1
+                    elif (len(new_device_nei[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
+                        if (len(new_device_nei) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
+                            x = x + 1
+                            y = 0
+                            z = 0
+                        elif (len(new_device_nei) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
+                            x = -2
+                            y = -2
+                            z = -2
+                            break
+                elif (new_device_nei[x][y] != new_tested[z]): # Jei dar netestuotas, tai ...
+                    if (len(new_tested) > z + 1): # Jei dar liko pratestuotu sarase irenginiu, tai perziurek juos.
+                        z = z + 1
+                    elif (len(new_tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
+                        ip = new_device_nei[x][y]
+                        ip_add = get_ip_add(ip)
+                        if (ip_add != ['failed']):
+                            port_list = get_id_port(ip)
+                            device_list = []
+                            port_list1 = []
+                            for a in range(0, len(ip_add)):
+                                device_list.append(ip_add[a])
+                                all_ports_topology.append(port_list[a])
+                                port_list1.append(port_list[x])
+                            new_device_nei.append(device_list)
+                            new_device_nei_ports.append(port_list1)
+                            new_tested.append(ip)
+                        else:
+                            new_tested.append(ip)
+                            new_failed.append(ip)
+                        if (len(new_device_nei[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
+                            y = y + 1
+                        elif (len(new_device_nei[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
+                            if (len(new_device_nei) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
+                                x = x + 1
+                                y = 0
+                                z = 0
+                            elif (len(new_device_nei) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
+                                x = -2
+                                y = -2
+                                z = -2
+                                break
+    x = 0
+    y = 0
+    while (x > -1):
+        while (y > -1):
+            if (new_tested[x] == new_failed[y]):
+                del new_tested[x]
+                if (len(new_tested) <= x):
+                    x = -2
+                    y = -2
+                    break
+                elif (len(new_tested) > x):
+                    y = 0
+            elif (new_tested[x] != new_failed[y]):
+                if (len(new_failed) <= y + 1):
+                    if (len(new_tested) <= x + 1):
+                        y = -2
+                        x = -2
+                        break
+                    elif (len(new_tested) > x + 1):
+                        y = 0
+                        x = x + 1
+                elif (len(new_failed) > y + 1):
+                    y = y + 1
+
+    if (len(tested) == len(new_tested)):
+        x = 0
+        while (x > -1):
+            if (tested[x] == new_tested[x]):
+                if (len(tested) > x + 1):
+                    x = x + 1
+                elif (len(tested) <= x + 1):
+                    x = -2
+                    break
+            elif (tested[x] != new_tested[x]):
+                print str(tested[x]) + 'dingo ir atsirado' + str(new_tested)
+                tested = new_tested
+                failed = new_failed
+                device_nei = new_device_nei
+                device_nei_ports = new_device_nei_ports
+                x = -2
+                break
+
+    elif (len(tested) > len(new_tested)):
+        x = 0
+        while (x > -1):
+            if (tested[x] == new_tested[x]):
+                if (len(tested) > x + 1):
+                    if (len(new_tested) > x + 1):
+                        x = x + 1
+                    else:
+                        print 'IP = ' str(tested[x]) + ' dingo.'
+                        tested = new_tested
+                        failed = new_failed
+                        device_nei = new_device_nei
+                        device_nei_ports = new_device_nei_ports
+                        x = -2
+                        break
+                elif (len(tested) <= x + 1):
+                    x = -2
+                    break
+            elif (tested[x] != new_tested[x]):
+                print 'IP = ' str(tested[x]) + ' dingo.'
+                tested = new_tested
+                failed = new_failed
+                device_nei = new_device_nei
+                device_nei_ports = new_device_nei_ports
+                x = -2
+                break
+
+    elif (len(tested) < len(new_tested)):
+        x = 0
+        while (x > -1):
+            if (tested[x] == new_tested[x]):
+                if (len(new_tested) > x + 1):
+                    if (len(tested) > x + 1):
+                        x = x + 1
+                    else:
+                        print 'IP = ' str(new_tested[x]) + ' atsirado.'
+                        tested = new_tested
+                        failed = new_failed
+                        device_nei = new_device_nei
+                        device_nei_ports = new_device_nei_ports
+                        x = -2
+                        break
+                elif (len(new_tested) <= x + 1):
+                    x = -2
+                    break
+            elif (tested[x] != new_tested[x]):
+                print 'IP = ' str(new_tested[x]) + ' atsirado.'
+                tested = new_tested
+                failed = new_failed
+                device_nei = new_device_nei
+                device_nei_ports = new_device_nei_ports
+                x = -2
+                break
+
+
+
+
+    
 
 print failed
 
