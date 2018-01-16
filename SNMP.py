@@ -311,7 +311,6 @@ while(a > 0):
                 print str(tested[x]) + 'dingo ir atsirado' + str(new_tested)
                 tested = new_tested
                 failed = new_failed
-                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
@@ -328,7 +327,6 @@ while(a > 0):
                         print 'IP = ' + str(tested[x]) + ' dingo.'
                         tested = new_tested
                         failed = new_failed
-                        new_failed = []
                         device_nei = new_device_nei
                         device_nei_ports = new_device_nei_ports
                         x = -2
@@ -340,7 +338,6 @@ while(a > 0):
                 print 'IP = ' + str(tested[x]) + ' dingo.'
                 tested = new_tested
                 failed = new_failed
-                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
@@ -357,7 +354,6 @@ while(a > 0):
                         print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                         tested = new_tested
                         failed = new_failed
-                        new_failed = []
                         device_nei = new_device_nei
                         device_nei_ports = new_device_nei_ports
                         x = -2
@@ -369,11 +365,11 @@ while(a > 0):
                 print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                 tested = new_tested
                 failed = new_failed
-                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
                 break
+    new_failed = []
 
 
 
