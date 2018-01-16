@@ -297,6 +297,8 @@ while(a > 0):
                 elif (len(new_failed) > y + 1):
                     y = y + 1
 
+    del new_tested[0]
+
 
     if (len(tested) == len(new_tested)):
         x = 0
