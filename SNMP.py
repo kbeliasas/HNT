@@ -321,7 +321,7 @@ while(a > 0):
                     if (len(new_tested) > x + 1):
                         x = x + 1
                     else:
-                        print 'IP = ' str(tested[x]) + ' dingo.'
+                        print 'IP = ' + str(tested[x]) + ' dingo.'
                         tested = new_tested
                         failed = new_failed
                         device_nei = new_device_nei
@@ -332,7 +332,7 @@ while(a > 0):
                     x = -2
                     break
             elif (tested[x] != new_tested[x]):
-                print 'IP = ' str(tested[x]) + ' dingo.'
+                print 'IP = ' + str(tested[x]) + ' dingo.'
                 tested = new_tested
                 failed = new_failed
                 device_nei = new_device_nei
@@ -348,7 +348,7 @@ while(a > 0):
                     if (len(tested) > x + 1):
                         x = x + 1
                     else:
-                        print 'IP = ' str(new_tested[x]) + ' atsirado.'
+                        print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                         tested = new_tested
                         failed = new_failed
                         device_nei = new_device_nei
@@ -359,7 +359,7 @@ while(a > 0):
                     x = -2
                     break
             elif (tested[x] != new_tested[x]):
-                print 'IP = ' str(new_tested[x]) + ' atsirado.'
+                print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                 tested = new_tested
                 failed = new_failed
                 device_nei = new_device_nei
