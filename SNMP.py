@@ -104,7 +104,6 @@ for x in range(0, len(ip_add)):
 device_nei = [device_list]
 device_nei_ports = [port_list1]
 tested.append(ip)
-tested_names
 
 
 
@@ -205,7 +204,7 @@ all_list.append(device_nei)
 all_list.append(device_nei_ports)
 
 f = open('topology.txt','w')
-f.write(all_list)
+f.write(str(all_list)
 f.close()
 
 draw_topology(realations,all_ports_topology)
