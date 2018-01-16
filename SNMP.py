@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 ip = '192.168.50.100'
 com = 'public'
 failed = []
+new_failed = []
 
 def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     session = easysnmp.Session(hostname=ip, version=2, community=com)
@@ -296,6 +297,7 @@ while(a > 0):
                 elif (len(new_failed) > y + 1):
                     y = y + 1
 
+
     if (len(tested) == len(new_tested)):
         x = 0
         while (x > -1):
@@ -309,6 +311,7 @@ while(a > 0):
                 print str(tested[x]) + 'dingo ir atsirado' + str(new_tested)
                 tested = new_tested
                 failed = new_failed
+                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
@@ -325,6 +328,7 @@ while(a > 0):
                         print 'IP = ' + str(tested[x]) + ' dingo.'
                         tested = new_tested
                         failed = new_failed
+                        new_failed = []
                         device_nei = new_device_nei
                         device_nei_ports = new_device_nei_ports
                         x = -2
@@ -336,6 +340,7 @@ while(a > 0):
                 print 'IP = ' + str(tested[x]) + ' dingo.'
                 tested = new_tested
                 failed = new_failed
+                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
@@ -352,6 +357,7 @@ while(a > 0):
                         print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                         tested = new_tested
                         failed = new_failed
+                        new_failed = []
                         device_nei = new_device_nei
                         device_nei_ports = new_device_nei_ports
                         x = -2
@@ -363,6 +369,7 @@ while(a > 0):
                 print 'IP = ' + str(new_tested[x]) + ' atsirado.'
                 tested = new_tested
                 failed = new_failed
+                new_failed = []
                 device_nei = new_device_nei
                 device_nei_ports = new_device_nei_ports
                 x = -2
