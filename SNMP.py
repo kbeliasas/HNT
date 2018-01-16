@@ -300,25 +300,7 @@ while(a > 0):
     del new_tested[0]
 
 
-    if (len(tested) == len(new_tested)):
-        x = 0
-        while (x > -1):
-            if (tested[x] == new_tested[x]):
-                if (len(tested) > x + 1):
-                    x = x + 1
-                elif (len(tested) <= x + 1):
-                    x = -2
-                    break
-            elif (tested[x] != new_tested[x]):
-                print str(tested[x]) + 'dingo ir atsirado' + str(new_tested)
-                tested = new_tested
-                failed = new_failed
-                device_nei = new_device_nei
-                device_nei_ports = new_device_nei_ports
-                x = -2
-                break
-
-    elif (len(tested) > len(new_tested)):
+    if (len(tested) > len(new_tested)):
         x = 0
         while (x > -1):
             if (tested[x] == new_tested[x]):
@@ -353,7 +335,7 @@ while(a > 0):
                     if (len(tested) > x + 1):
                         x = x + 1
                     else:
-                        print 'IP = ' + str(new_tested[x]) + ' atsirado.'
+                        print 'IP = ' + str(new_tested[x+1]) + ' atsirado.'
                         tested = new_tested
                         failed = new_failed
                         device_nei = new_device_nei
