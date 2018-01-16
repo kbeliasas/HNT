@@ -89,17 +89,20 @@ def draw_topology(graph, labels=None, graph_layout='shell',
 
 
 tested = ['']
-tested_names = []
+device_nei_ports = []
 
 
 ip_add = get_ip_add(ip)
 port_list = get_id_port(ip)
 device_list = []
-all_ports = []
+all_ports_topology = []
+port_list1 = []
 for x in range(0, len(ip_add)):
     device_list.append(ip_add[x])
-    all_ports.append(port_list[x])
-all_list = [device_list]
+    all_ports_topology.append(port_list[x])
+    port_list1.append(port_list[x])
+device_nei = [device_list]
+device_nei_ports = [port_list1]
 tested.append(ip)
 tested_names
 
@@ -115,43 +118,46 @@ while (x > -1):
             #print "x = " + str(x)
             #print "y = " + str(y)
             #print "z = " + str(z)
-            if (all_list[x][y] == tested[z]): # Jei jau testuotas, tai ...
-                if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
+            if (device_nei[x][y] == tested[z]): # Jei jau testuotas, tai ...
+                if (len(device_nei[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                     y = y + 1
-                elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
-                    if (len(all_list) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
+                elif (len(device_nei[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
+                    if (len(device_nei) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
                         x = x + 1
                         y = 0
                         z = 0
-                    elif (len(all_list) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
+                    elif (len(device_nei) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
                         x = -2
                         y = -2
                         z = -2
                         break
-            elif (all_list[x][y] != tested[z]): # Jei dar netestuotas, tai ...
+            elif (device_nei[x][y] != tested[z]): # Jei dar netestuotas, tai ...
                 if (len(tested) > z + 1): # Jei dar liko pratestuotu sarase irenginiu, tai perziurek juos.
                     z = z + 1
                 elif (len(tested) <= z + 1): # Jei nebeliko pratestuotu sarase irenginiu, tai ieskok nauju kaimynu.
-                    ip = all_list[x][y]
+                    ip = device_nei[x][y]
                     ip_add = get_ip_add(ip)
                     if (ip_add != ['failed']):
                         port_list = get_id_port(ip)
                         device_list = []
+                        port_list1 = []
                         for a in range(0, len(ip_add)):
                             device_list.append(ip_add[a])
-                            all_ports.append(port_list[a])
-                        all_list.append(device_list)
+                            all_ports_topology.append(port_list[a])
+                            port_list1.append(port_list[x])
+                        device_nei.append(device_list)
+                        device_nei_ports.append(port_list1)
                         tested.append(ip)
                     else:
                         tested.append(ip)
-                    if (len(all_list[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
+                    if (len(device_nei[x]) > y + 1): # Jei dar liko kaimynu, tai patikrink ji.
                         y = y + 1
-                    elif (len(all_list[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
-                        if (len(all_list) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
+                    elif (len(device_nei[x]) <= y + 1): # Jei nebeliko kaimynu, tai ...
+                        if (len(device_nei) > x + 1): # Jei yra kitu irenginiu, tai tikrink juos.
                             x = x + 1
                             y = 0
                             z = 0
-                        elif (len(all_list) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
+                        elif (len(device_nei) <= x + 1): # Jei nebeliko irenginiu, tai uzbaik.
                             x = -2
                             y = -2
                             z = -2
@@ -189,11 +195,20 @@ print tested
 
 
 for x in range(0, len(tested)):
-    for y in range(0, len(all_list[x])):
-        temp = (tested[x], all_list[x][y])
+    for y in range(0, len(device_nei[x])):
+        temp = (tested[x], device_nei[x][y])
         realations.append(temp)
 
-draw_topology(realations,all_ports)
+all_list = []
+all_list.append(tested)
+all_list.append(device_nei)
+all_list.append(device_nei_ports)
+
+f = open('topology.txt','w')
+f.write(all_list)
+f.close()
+
+draw_topology(realations,all_ports_topology)
 
 print failed
 
