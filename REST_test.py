@@ -74,7 +74,7 @@ for x in range(0, len(allOFnodes['nodes']['node'])):
     for y in range(0, len(allOFnodes['nodes']['node'][x])-2):
         OF_node_ports.append(allOFnodes['nodes']['node'][x]['node-connector'][y]['flow-node-inventory:port-number'])
         OF_node_macs.append(allOFnodes['nodes']['node'][x]['node-connector'][y]['flow-node-inventory:hardware-address'])
-    all_OF_node_ports.append(OF_node_names)
+    all_OF_node_ports.append(OF_node_ports)
     all_OF_node_macs.append(OF_node_macs)
 
 
