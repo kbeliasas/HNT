@@ -8,5 +8,7 @@ h.add_credentials('admin', 'admin')
 resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
 allnodes = json.loads(content)
+nodes = allnodes['nodes']
 
-print allnodes
+
+print json.dumps(nodes[0], indent = 2)
