@@ -242,7 +242,7 @@ for x in range(0, len(all_OF_node_macs)):
             print "miss"
 
 
-print 'OpenFlow = ' str(OF_swi)
+print 'OpenFlow = ' + str(OF_swi)
 
 
 
@@ -420,9 +420,6 @@ while(a > 0):
     new_failed = []
 
 
-
-
-    
 
 print failed
 
