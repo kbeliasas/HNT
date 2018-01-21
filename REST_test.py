@@ -12,7 +12,7 @@ all_OF_node_macs = []
 
 allOFnodes = json.loads(content)
 
-for x in range(0, len(allOFnodes['nodes']['node'])-1):
+for x in range(0, len(allOFnodes['nodes']['node'])):
     OF_node_names = []
     OF_node_macs = []
     for y in range(0, len(allOFnodes['nodes']['node'][x])-2):
