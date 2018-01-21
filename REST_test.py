@@ -55,8 +55,12 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
         return ans
 
 def get_port_mac(ip, port):
-    session = easysnmp.Session(hostname=ip, version=2, community=com)
+    session = easysnmp.Session(hostname=ip, version=2, community=com, use_sprint_value=True)
     res = session.walk('.1.3.6.1.2.1.2.2.1.6.'+str(port))
+    ans = []
+    for item in res:
+        ans.append(item.value)
+    return ans
 
 
 h = httplib2.Http(".cache")
