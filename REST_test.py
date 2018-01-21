@@ -62,6 +62,28 @@ def get_port_macs(ip):
         ans.append(item.value)
     return ans
 
+def mac_corr(string):
+    a = 0
+    x = 0
+    while (x > -1):
+        if (x < len(string)):
+            if (string[x] != ':'):
+                a = a + 1
+            elif(string[x] == ':'):
+                if (a < 2):
+                    a = 0
+                    string = string[:x-1] + '0' + string[x-1:]
+                    x = x + 1
+                elif (a >= 2):
+                    a = 0
+            x = x + 1
+        else:
+            if (a < 2):
+                string = string[:x-1] + '0' + string[x-1:]
+            x = -2
+            break
+    return string
+
 
 h = httplib2.Http(".cache")
 h.add_credentials('admin', 'admin')
@@ -188,6 +210,7 @@ for x in range(0, len(all_OF_node_macs)):
         try:
             macs = get_port_macs(tested[y])
             for mac in macs:
+                mac = mac_corr(mac)
                 if (mac == all_OF_node_macs[x][0]):
                     OF_swi.append(tested[y])
                     break
