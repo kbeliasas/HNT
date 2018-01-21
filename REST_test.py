@@ -54,9 +54,9 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
         ans.append('')
         return ans
 
-def get_port_mac(ip, port):
+def get_port_macs(ip):
     session = easysnmp.Session(hostname=ip, version=2, community=com, use_sprint_value=True)
-    res = session.walk('.1.3.6.1.2.1.2.2.1.6.'+str(port))
+    res = session.walk('.1.3.6.1.2.1.2.2.1.6')
     ans = []
     for item in res:
         ans.append(item.value)
@@ -183,12 +183,14 @@ while (x > -1):
 
 del tested[0]
 
-for x in range(0, len(all_OF_node_ports)):
+for x in range(0, len(all_OF_node_macs)):
     for y in range(0, len(tested)):
         try:
-            if (get_port_mac(tested[y], all_OF_node_ports[x][0]) == all_OF_node_macs[x][0]):
-                OF_swi.append(tested[y])
-                break
+            macs = get_port_macs(tested[y])
+            for mac in macs:
+                if (mac == all_OF_node_macs[x][0]):
+                    OF_swi.append(tested[y])
+                    break
         except Exception as e:
             print "miss"
 
