@@ -5,7 +5,7 @@ import json
 
 h = httplib2.Http(".cache")
 h.add_credentials('admin', 'admin')
-resp, content = h.request('http://192.168.50.254:8181/restconf/config/opendaylight-inventory:nodes', "GET")
+resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
 print "resp"
 print resp
