@@ -57,6 +57,14 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
         ans.append('')
         return ans
 
+def get_port_macs(ip):
+    session = easysnmp.Session(hostname=ip, version=2, community=com, use_sprint_value=True)
+    res = session.walk('.1.3.6.1.2.1.2.2.1.6')
+    ans = []
+    for item in res:
+        ans.append(item.value)
+    return ans
+
 def mac_corr(string):
     a = 0
     x = 0
