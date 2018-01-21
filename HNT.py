@@ -11,6 +11,7 @@ ip = '192.168.50.100'
 com = 'public'
 failed = []
 new_failed = []
+OF_swi = []
 
 def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     session = easysnmp.Session(hostname=ip, version=2, community=com)
