@@ -54,6 +54,28 @@ def get_id_port(ip): # Pasiima kaimynu sasaju numerius
         ans.append('')
         return ans
 
+def mac_corr(string):
+    a = 0
+    x = 0
+    while (x > -1):
+        if (x < len(string)):
+            if (string[x] != ':'):
+                a = a + 1
+            elif(string[x] == ':'):
+                if (a < 2):
+                    a = 0
+                    string = string[:x-1] + '0' + string[x-1:]
+                    x = x + 1
+                elif (a >= 2):
+                    a = 0
+            x = x + 1
+        else:
+            if (a < 2):
+                string = string[:x-1] + '0' + string[x-1:]
+            x = -2
+            break
+    return string
+
 def draw_topology(graph, labels=None, graph_layout='shell',
                node_size=1600, node_color='blue', node_alpha=0.3,
                node_text_size=12,
@@ -86,6 +108,22 @@ def draw_topology(graph, labels=None, graph_layout='shell',
     nx.draw_networkx_edge_labels(G, graph_pos, edge_labels=edge_labels, label_pos=edge_text_pos)
 
     plt.show()
+
+
+h = httplib2.Http(".cache")
+h.add_credentials('admin', 'admin')
+resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
+
+all_OF_node_ports = []
+all_OF_node_macs = []
+
+allOFnodes = json.loads(content)
+
+for x in range(0, len(allOFnodes['nodes']['node'])):
+    OF_node_macs = []
+    for y in range(0, len(allOFnodes['nodes']['node'][x])-2):
+        OF_node_macs.append(allOFnodes['nodes']['node'][x]['node-connector'][y]['flow-node-inventory:hardware-address'])
+    all_OF_node_macs.append(OF_node_macs)
 
 
 tested = ['']
@@ -191,7 +229,21 @@ realations = []
 
 del tested[0]
 
-print tested
+for x in range(0, len(all_OF_node_macs)):
+    for y in range(0, len(tested)):
+        try:
+            macs = get_port_macs(tested[y])
+            for mac in macs:
+                mac = mac_corr(mac)
+                if (mac == all_OF_node_macs[x][0]):
+                    OF_swi.append(tested[y])
+                    break
+        except Exception as e:
+            print "miss"
+
+
+print 'OpenFlow = ' str(OF_swi)
+
 
 
 for x in range(0, len(tested)):
@@ -298,6 +350,18 @@ while(a > 0):
                     y = y + 1
 
     del new_tested[0]
+
+    for x in range(0, len(all_OF_node_macs)):
+        for y in range(0, len(tested)):
+            try:
+                macs = get_port_macs(tested[y])
+                for mac in macs:
+                    mac = mac_corr(mac)
+                    if (mac == all_OF_node_macs[x][0]):
+                        OF_swi.append(tested[y])
+                        break
+            except Exception as e:
+                print "miss"
 
 
     if (len(tested) > len(new_tested)):
