@@ -17,3 +17,5 @@ def get_man_ip_add(ip): #Management IP
         ans = []
         ans.append('')
         return ans
+
+print get_man_ip_add(ip)
