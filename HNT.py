@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import httplib2
 import json
 
-# ip = '192.168.226.152' # Pirmas irenginys
 ip = '192.168.50.100'
 com = 'public'
 failed = []
