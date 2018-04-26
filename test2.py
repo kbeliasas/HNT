@@ -45,4 +45,4 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         ans.append('failed')
         return ans
 
-print get_man_ip_add(ip)
+print get_ip_add(ip)
