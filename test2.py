@@ -12,7 +12,7 @@ def get_man_ip_add(ip): #Management IP
     temp_value = []
     for item in res:
         temp_value.append(item.value)
-        print item.oid
+        print item.oid_index
     return res
 
 print get_man_ip_add(ip)
