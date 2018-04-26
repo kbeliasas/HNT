@@ -42,13 +42,19 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         return ans
 
 def get_man_ip_add(ip): #Management IP
-    session = easysnmp.Session(hostname=ip, version=2, community=com)
-    res = session.walk('.1.3.6.1.2.1.4.20.1.2')
-    for item in res:
-        if item.value == man_vlan:
-            return item.oid_index
-            break
-
+    try:
+        session = easysnmp.Session(hostname=ip, version=2, community=com)
+        res = session.walk('.1.3.6.1.2.1.4.20.1.2')
+        for item in res:
+            if item.value == man_vlan:
+                return item.oid_index
+                break
+    except Exception as e:
+        print 'Something wrong on ip = ' + ip
+        print(e)
+        ans = []
+        ans.append('failed')
+        return ans
 
 tested = []
 tested.append(ip)
@@ -60,7 +66,8 @@ if ip != get_man_ip_add(ip):
 all_list = []
 temp_list = []
 for item in get_ip_add(ip):
-    temp_list.append(get_man_ip_add(item))
+    if get_man_ip_add(item) != 'failed':
+        temp_list.append(get_man_ip_add(item))
 all_list.append(temp_list)
 
 
@@ -124,7 +131,8 @@ while (x > -1):
                                     manage.append(get_man_ip_add(ip))
                                     temp_list = []
                                     for item in get_ip_add(get_man_ip_add(ip)):
-                                        temp_list.append(get_man_ip_add(item))
+                                        if get_man_ip_add(item) != 'failed':
+                                            temp_list.append(get_man_ip_add(item))
                                     all_list.append(temp_list)
                                     print 'Pavyko!'
                                     b = -2
@@ -136,7 +144,8 @@ while (x > -1):
                         print 'IP = man ip'
                         temp_list = []
                         for item in get_ip_add(ip):
-                            temp_list.append(get_man_ip_add(item))
+                            if get_man_ip_add(item) != 'failed':
+                                temp_list.append(get_man_ip_add(item))
                         all_list.append(temp_list)
                     if (len(all_list[x]) > y + 1):
                         print "len of all_list[x]=" + str(len(all_list[x]))
