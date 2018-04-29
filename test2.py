@@ -33,8 +33,7 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     except Exception as e:
         print 'Something wrong on ip = ' + ip
         print(e)
-        ans = []
-        ans.append('failed')
+        ans = failed
         return ans
 
 def get_man_ip_add(ip): #Management IP
@@ -48,8 +47,7 @@ def get_man_ip_add(ip): #Management IP
     except Exception as e:
         print 'Something wrong on ip = ' + ip
         print(e)
-        ans = []
-        ans.append('failed')
+        ans = 'failed'
         return ans
 
 tested = []
