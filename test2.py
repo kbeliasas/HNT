@@ -45,4 +45,21 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
         ans.append('failed')
         return ans
 
-print get_ip_add(ip)
+tested = []
+tested.append(ip)
+manage = []
+if ip != get_man_ip_add(ip):
+    ip = get_man_ip_add(ip)
+    tested.append(ip)
+    manage.append(get_man_ip_add(ip))
+all_list = []
+temp_list = []
+for item in get_ip_add(ip):
+    if get_man_ip_add(item) != 'failed':
+        temp_list.append(get_man_ip_add(item))
+all_list.append(temp_list)
+
+
+print 'Manage = ' + str(manage)
+print 'all_list = ' + str(all_list)
+print 'tested = ' + str(tested)
