@@ -23,5 +23,6 @@ def get_man_ip_add(ip): #Management IP
 
 
 
-
+if get_man_ip_add(ip) == None:
+    print "HIT"
 print get_man_ip_add(ip)
