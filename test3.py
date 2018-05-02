@@ -18,7 +18,7 @@ def get_man_ip_add(ip): #Management IP
                 break
         if res1 == None:
             for item in res:
-                if item.value == (man_vlan - 329):
+                if item.value == (int(float(man_vlan)) - 329):
                     res1 = item.oid_index
                     break
         return res1
