@@ -74,10 +74,12 @@ for item in get_ip_add(ip):
     if get_man_ip_add(item) == 'failed':
         print "1"
         temp_list.append(item)
+        tested.append(item)
     elif get_man_ip_add(item) == None:
         print "2"
         print str(item) + " Don't have man VLAN"
         temp_list.append(item)
+        tested.append(item)
     else:
         temp_list.append(get_man_ip_add(item))
 all_list.append(temp_list)
@@ -145,9 +147,11 @@ while (x > -1):
                                     for item in get_ip_add(ip):
                                         if get_man_ip_add(item) == 'failed':
                                             temp_list.append(item)
+                                            tested.append(item)
                                             print "1"
                                         elif get_man_ip_add(item) == None:
                                             temp_list.append(item)
+                                            tested.append(item)
                                             print "2"
                                             print str(item) + "Don't have man VLAN"
                                         else:
@@ -165,9 +169,11 @@ while (x > -1):
                         for item in get_ip_add(ip):
                             if get_man_ip_add(item) == 'failed':
                                 temp_list.append(item)
+                                tested.append(item)
                                 print "1"
                             elif get_man_ip_add(item) == None:
                                 temp_list.append(item)
+                                tested.append(item)
                                 print "2"
                                 print str(item) + "Don't have man VLAN"
                             else:
