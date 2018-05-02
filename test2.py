@@ -77,6 +77,7 @@ for item in get_ip_add(ip):
 all_list.append(temp_list)
 
 
+
 print 'Manage = ' + str(manage)
 print 'all_list = ' + str(all_list)
 print 'tested = ' + str(tested)

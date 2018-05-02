@@ -37,23 +37,28 @@ def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     except Exception as e:
         print 'Something wrong on ip = ' + ip
         print(e)
-        ans = []
-        ans.append('failed')
+        ans = failed
         return ans
 
 def get_man_ip_add(ip): #Management IP
     try:
         session = easysnmp.Session(hostname=ip, version=2, community=com)
         res = session.walk('.1.3.6.1.2.1.4.20.1.2')
+        res1 = None
         for item in res:
             if item.value == man_vlan:
-                return item.oid_index
+                res1 = item.oid_index
                 break
+        if res1 == None:
+            for item in res:
+                if item.value == str(int(float(man_vlan)) + 329):
+                    res1 = item.oid_index
+                    break
+        return res1
     except Exception as e:
         print 'Something wrong on ip = ' + ip
         print(e)
-        ans = []
-        ans.append('failed')
+        ans = 'failed'
         return ans
 
 tested = []
@@ -66,7 +71,12 @@ if ip != get_man_ip_add(ip):
 all_list = []
 temp_list = []
 for item in get_ip_add(ip):
-    if get_man_ip_add(item) != 'failed':
+    if get_man_ip_add(item) == 'failed':
+        print "1"
+    elif get_man_ip_add(item) == None:
+        print "2"
+        print str(item) + "Don't have man VLAN"
+    else:
         temp_list.append(get_man_ip_add(item))
 all_list.append(temp_list)
 
@@ -130,8 +140,13 @@ while (x > -1):
                                     tested.append(get_man_ip_add(ip))
                                     manage.append(get_man_ip_add(ip))
                                     temp_list = []
-                                    for item in get_ip_add(get_man_ip_add(ip)):
-                                        if get_man_ip_add(item) != 'failed':
+                                    for item in get_ip_add(ip):
+                                        if get_man_ip_add(item) == 'failed':
+                                            print "1"
+                                        elif get_man_ip_add(item) == None:
+                                            print "2"
+                                            print str(item) + "Don't have man VLAN"
+                                        else:
                                             temp_list.append(get_man_ip_add(item))
                                     all_list.append(temp_list)
                                     print 'Pavyko!'
@@ -144,7 +159,12 @@ while (x > -1):
                         print 'IP = man ip'
                         temp_list = []
                         for item in get_ip_add(ip):
-                            if get_man_ip_add(item) != 'failed':
+                            if get_man_ip_add(item) == 'failed':
+                                print "1"
+                            elif get_man_ip_add(item) == None:
+                                print "2"
+                                print str(item) + "Don't have man VLAN"
+                            else:
                                 temp_list.append(get_man_ip_add(item))
                         all_list.append(temp_list)
                     if (len(all_list[x]) > y + 1):
