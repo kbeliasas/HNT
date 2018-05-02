@@ -60,14 +60,13 @@ if ip != get_man_ip_add(ip):
 all_list = []
 temp_list = []
 for item in get_ip_add(ip):
-    if get_man_ip_add(item) != 'failed':
-        temp_list.append(get_man_ip_add(item))
+    if get_man_ip_add(item) == 'failed':
         print "1"
-    elif get_man_ip_add(item) != None:
-        temp_list.append(get_man_ip_add(item))
-        print "2"
     elif get_man_ip_add(item) == None:
+        print "2"
         print str(item) + "Don't have man VLAN"
+    else:
+        temp_list.append(get_man_ip_add(item))
 all_list.append(temp_list)
 
 
