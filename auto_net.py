@@ -197,8 +197,9 @@ while (x > -1):
                             x = -2
                             y = -2
                             z = -2
-                            break
                             print '13'
+                            break
+
 
 
 
