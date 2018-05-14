@@ -104,6 +104,7 @@ while (x > -1):
                 print '1'
                 if (len(all_list[x]) > y + 1):
                     y = y + 1
+                    z = 0
                     print '2'
                 elif (len(all_list[x]) <= y + 1):
                     print '3'
@@ -182,6 +183,7 @@ while (x > -1):
                     if (len(all_list[x]) > y + 1):
                         print "len of all_list[x]=" + str(len(all_list[x]))
                         y = y + 1
+                        z = 0
                         print '10'
                     elif (len(all_list[x]) <= y + 1):
                         print '11'
