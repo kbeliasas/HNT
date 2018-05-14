@@ -117,8 +117,8 @@ while (x > -1):
                         x = -2
                         y = -2
                         z = -2
-                        break
                         print '5'
+                        break
             elif (all_list[x][y] != tested[z]):
                 print '6'
                 if (len(tested) > z + 1):
