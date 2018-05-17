@@ -9,6 +9,7 @@ import json
 ip = '192.168.50.100'
 com = 'public'
 man_vlan = '500'
+OF_swi = []
 
 def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     session = easysnmp.Session(hostname=ip, version=2, community=com)
