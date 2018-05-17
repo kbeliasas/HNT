@@ -61,6 +61,51 @@ def get_man_ip_add(ip): #Management IP
         ans = 'failed'
         return ans
 
+def get_port_macs(ip):
+    session = easysnmp.Session(hostname=ip, version=2, community=com, use_sprint_value=True)
+    res = session.walk('.1.3.6.1.2.1.2.2.1.6')
+    ans = []
+    for item in res:
+        ans.append(item.value)
+    return ans
+
+def mac_corr(string):
+    a = 0
+    x = 0
+    while (x > -1):
+        if (x < len(string)):
+            if (string[x] != ':'):
+                a = a + 1
+            elif(string[x] == ':'):
+                if (a < 2):
+                    a = 0
+                    string = string[:x-1] + '0' + string[x-1:]
+                    x = x + 1
+                elif (a >= 2):
+                    a = 0
+            x = x + 1
+        else:
+            if (a < 2):
+                string = string[:x-1] + '0' + string[x-1:]
+            x = -2
+            break
+    return string
+
+h = httplib2.Http(".cache")
+h.add_credentials('admin', 'admin')
+resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
+
+all_OF_node_ports = []
+all_OF_node_macs = []
+
+allOFnodes = json.loads(content)
+
+for x in range(0, len(allOFnodes['nodes']['node'])):
+    OF_node_macs = []
+    for y in range(0, len(allOFnodes['nodes']['node'][x])-2):
+        OF_node_macs.append(allOFnodes['nodes']['node'][x]['node-connector'][y]['flow-node-inventory:hardware-address'])
+    all_OF_node_macs.append(OF_node_macs)
+
 tested = []
 tested.append(ip)
 manage = []
@@ -201,6 +246,20 @@ while (x > -1):
                             break
 
 
+for x in range(0, len(all_OF_node_macs)):
+    for y in range(0, len(manage)):
+        try:
+            macs = get_port_macs(manage[y])
+            for mac in macs:
+                mac = mac_corr(mac)
+                if (mac == all_OF_node_macs[x][0]):
+                    OF_swi.append(manage[y])
+                    break
+        except Exception as e:
+            print "miss"
+
+
+print 'OpenFlow = ' + str(OF_swi)
 
 
 print 'Manage = ' + str(manage)
