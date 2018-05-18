@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import easysnmp
-import networkx as nx
-import matplotlib.pyplot as plt
+#import networkx as nx
+#import matplotlib.pyplot as plt
 import httplib2
 import json
 
