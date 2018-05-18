@@ -2,9 +2,15 @@
 
 from ncclient import manager
 
-host = 192.168.50.5
+host = "192.168.50.5"
+user = "admin"
+password = "cisco"
 
-with manager.connect(host=host, port=830, username=user, hostkey_verify=False) as m:
-    c = m.get_config(source='running').data_xml
-    with open("%s.xml" % host, 'w') as f:
-        f.write(c)
+
+with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
+    try:
+        print pavyko
+        a = m.get()
+        a.close()
+    except Exception as e:
+        print e
