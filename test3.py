@@ -38,5 +38,7 @@ def create_access_vlan(host, user, password, interface, vlan):
         except Exception:
             log.exception("Exception in creating access port in %s for %s vlan" % (interface, vlan))
 
-create_access_vlan(host,user,password, "interface GigabitEthernet0/28", '500')
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.DEBUG)
+    create_access_vlan(host,user,password, "interface GigabitEthernet0/28", '500')
 
