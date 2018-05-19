@@ -11,10 +11,18 @@ user = "admin"
 password = "cisco"
 
 
-ACCESS_VLAN = """
+ADD_MAC_ADDRESS = """
 <config>
         <cli-config-data>
-            <cmd>username %s privilege 15 secret %s</cmd>
+            <cmd>mac address-table static %s vlan %s interface %s</cmd>
+        </cli-config-data>
+</config>
+"""
+
+REMOVE_MAC_ADDRESS = """
+<config>
+        <cli-config-data>
+            <cmd>no mac address-table static %s vlan %s interface %s</cmd>
         </cli-config-data>
 </config>
 """
@@ -27,16 +35,16 @@ def _check_response(rpc_obj, snippet_name):
     else:
         log.error("Cannot successfully execute: %s" % snippet_name)
 
-def create_access_vlan(host, user, password, username, password1):
+def add_mac(host, user, password, mac, vlan, interface):
     with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
         try:
-            confstr = ACCESS_VLAN % (username, password1)
+            confstr = ADD_MAC_ADDRESS % (mac, vlan, interface)
             rpc_obj = m.edit_config(target='running', config=confstr)
-            _check_response(rpc_obj, 'ACCESS_VLAN')
+            _check_response(rpc_obj, 'ADD_MAC_ADDRESS')
         except Exception:
-            log.exception("Exception in creating access port in %s for %s vlan" % (username, password1))
+            log.exception("Exception in adding %s mac %s vlan interface %s" % (mac, vlan, interface))
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    create_access_vlan(host,user,password, "test", 'test')
+    add_mac(host,user,password, "1111.1111.1111", "500", "gigabitEthernet0/27")
 
