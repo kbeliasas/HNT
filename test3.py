@@ -4,6 +4,8 @@ import sys
 import logging
 from ncclient import manager
 
+log = logging.getLogger(__name__)
+
 host = "192.168.50.6"
 user = "admin"
 password = "cisco"
