@@ -8,7 +8,6 @@ password = "cisco"
 
 
 with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
-    try:
-        c = m.get_config(source='running').data_xml
-        with open("%s.xml" % host, 'w') as f:
-            f.write(c)
+    c = m.get_config(source='running').data_xml
+    with open("%s.xml" % host, 'w') as f:
+        f.write(c)
