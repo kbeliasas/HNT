@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import sys, os, warnings
+warnings.simplefilter("ignore", DeprecationWarning)
 from ncclient import manager
 
 host = "192.168.50.6"
