@@ -37,6 +37,6 @@ def create_access_vlan(host, user, password, username, password1):
             log.exception("Exception in creating access port in %s for %s vlan" % (username, password1))
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
     create_access_vlan(host,user,password, "test", 'test')
 
