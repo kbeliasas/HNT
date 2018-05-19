@@ -11,6 +11,6 @@ with manager.connect(host=host, port=22, username=user, password=password, hostk
     try:
         print "pavyko"
         a = m.get()
-        a.close()
+        m.close()
     except Exception as e:
         print e
