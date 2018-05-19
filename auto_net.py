@@ -55,6 +55,11 @@ def get_man_ip_add(ip): #Management IP
                 if item.value == str(int(float(man_vlan)) + 329):
                     res1 = item.oid_index
                     break
+        if res1 == None:
+            for item in res:
+                if item.value == "34":
+                    res1 = item.oid_index
+                    break
         return res1
     except Exception as e:
         print 'Something wrong on ip = ' + ip
