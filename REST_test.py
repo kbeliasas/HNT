@@ -90,15 +90,11 @@ h.add_credentials('admin', 'admin')
 resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
 
-all_OF_node_ports = []
-all_OF_node_macs = []
 
 allOFnodes = json.loads(content)
 
 for node in allOFnodes['nodes']['node']:
     OF_node_macs = []
-    for node_connector in node['node-connector']:
-        OF_node_macs.append(node_connector['flow-node-inventory:hardware-address'])
-    all_OF_node_macs.append(OF_node_macs)
+    for node_table in node['flow-node-inventory:table']:
+        print node_table
 
-print all_OF_node_macs
