@@ -106,10 +106,10 @@ all_OF_node_macs = []
 
 allOFnodes = json.loads(content)
 
-for x in range(0, len(allOFnodes['nodes']['node'])):
+for node in allOFnodes['nodes']['node']:
     OF_node_macs = []
-    for y in range(0, len(allOFnodes['nodes']['node'][x])-2):
-        OF_node_macs.append(allOFnodes['nodes']['node'][x]['node-connector'][y]['flow-node-inventory:hardware-address'])
+    for node_connector in node['node-connector']:
+        OF_node_macs.append(node_connector['flow-node-inventory:hardware-address'])
     all_OF_node_macs.append(OF_node_macs)
 
 tested = []
