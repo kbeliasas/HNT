@@ -87,7 +87,7 @@ def mac_corr(string):
 
 h = httplib2.Http(".cache")
 h.add_credentials('admin', 'admin')
-resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes/node/openflow:14193329701457472', "GET")
+resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
 
 all_OF_node_ports = []
@@ -101,4 +101,4 @@ for node in allOFnodes['nodes']['node']:
         OF_node_macs.append(node_connector['flow-node-inventory:hardware-address'])
     all_OF_node_macs.append(OF_node_macs)
 
-
+print all_OF_node_macs
