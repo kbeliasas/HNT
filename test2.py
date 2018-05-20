@@ -6,7 +6,7 @@ import easysnmp
 import httplib2
 import json
 
-ip = '192.168.50.100'
+ip = '192.168.50.3'
 com = 'public'
 man_vlan = '500'
 OF_swi = []
@@ -93,25 +93,9 @@ def mac_corr(string):
     return string
 
 
-tested = []
-tested.append(ip)
-manage = []
-manage.append(get_man_ip_add(ip))
-if ip != get_man_ip_add(ip):
-    ip = get_man_ip_add(ip)
-    tested.append(ip)
-all_list = []
-temp_list = []
-for item in get_ip_add(ip):
-    if get_man_ip_add(item) == 'failed':
-        temp_list.append(item)
-        tested.append(item)
-    elif get_man_ip_add(item) == None:
-        print str(item) + " Don't have man VLAN"
-        temp_list.append(item)
-        tested.append(item)
-    else:
-        temp_list.append(get_man_ip_add(item))
-all_list.append(temp_list)
+macs = get_port_macs(ip)
+for mac in macs:
+    mac = mac_corr(mac)
+    print "MAC = %s" % mac
 
-print "get_ip_add = %s" % get_ip_add(ip)
+
