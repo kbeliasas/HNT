@@ -142,42 +142,26 @@ z = 0
 while (x > -1):
     while (y > -1):
         while (z > -1):
-            print "x = " + str(x)
-            print "y = " + str(y)
-            print "z = " + str(z)
-            print "manage = " + str(manage)
-            print "all_list = " + str(all_list)
-            print "all_list[x][y] = " + str(all_list[x][y])
-            print "tested = " + str(tested)
-            print "tested[z] = " + str(tested[z])
             #time.sleep(5)
             if (all_list[x][y] == tested[z]):
-                print '1'
                 if (len(all_list[x]) > y + 1):
                     y = y + 1
                     z = 0
-                    print '2'
                 elif (len(all_list[x]) <= y + 1):
-                    print '3'
                     if (len(all_list) > x + 1):
                         x = x + 1
                         y = 0
                         z = 0
-                        print '4'
                     elif (len(all_list) <= x + 1):
                         x = -2
                         y = -2
                         z = -2
-                        print '5'
                         break
             elif (all_list[x][y] != tested[z]):
-                print '6'
                 if (len(tested) > z + 1):
                     z = z + 1
-                    print '7'
                 elif (len(tested) <= z + 1):
                     ip = all_list[x][y]
-                    print '8'
                     if ip != get_man_ip_add(ip):
                         b = 0
                         while (b > -1):
@@ -200,33 +184,26 @@ while (x > -1):
                                         if get_man_ip_add(item) == 'failed':
                                             temp_list.append(item)
                                             tested.append(item)
-                                            print "1"
                                         elif get_man_ip_add(item) == None:
                                             temp_list.append(item)
                                             tested.append(item)
-                                            print "2"
                                             print str(item) + "Don't have man VLAN"
                                         else:
                                             temp_list.append(get_man_ip_add(item))
                                     all_list.append(temp_list)
-                                    print 'Pavyko!'
                                     b = -2
                                     break
-                        print '9'
                     elif ip == get_man_ip_add(ip):
                         tested.append(ip)
                         manage.append(ip)
-                        print 'IP = man ip'
                         temp_list = []
                         for item in get_ip_add(ip):
                             if get_man_ip_add(item) == 'failed':
                                 temp_list.append(item)
                                 tested.append(item)
-                                print "1"
                             elif get_man_ip_add(item) == None:
                                 temp_list.append(item)
                                 tested.append(item)
-                                print "2"
                                 print str(item) + "Don't have man VLAN"
                             else:
                                 temp_list.append(get_man_ip_add(item))
@@ -235,20 +212,16 @@ while (x > -1):
                         print "len of all_list[x]=" + str(len(all_list[x]))
                         y = y + 1
                         z = 0
-                        print '10'
                     elif (len(all_list[x]) <= y + 1):
-                        print '11'
                         if (len(all_list) > x + 1):
                             x = x + 1
                             y = 0
                             z = 0
-                            print '12'
                         elif (len(all_list) <= x + 1):
                             print "len of all_list="+str(len(all_list))
                             x = -2
                             y = -2
                             z = -2
-                            print '13'
                             break
 
 
