@@ -121,6 +121,12 @@ def mac_corr(string):
             break
     return string
 
+def mac_corr1(mac):
+    mac = mac.replace(":","")
+    mac = mac[:4] + "." + mac[4:]
+    mac = mac[:9] + "." + mac[9:]
+    return mac
+
 def _check_response(rpc_obj, snippet_name):
     log.debug("RPCReply for %s is %s" % (snippet_name, rpc_obj.xml))
     xml_str = rpc_obj.xml
@@ -132,7 +138,7 @@ def _check_response(rpc_obj, snippet_name):
 def add_mac_second(host, user, password, mac, vlan):
     with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
         try:
-            confstr = ADD_MAC_ADDRESS % (mac, vlan, interface)
+            confstr = ADD_MAC_ADDRESS % (mac, vlan)
             rpc_obj = m.edit_config(target='running', config=confstr)
             _check_response(rpc_obj, 'ADD_MAC_ADDRESS')
         except Exception:
@@ -141,7 +147,7 @@ def add_mac_second(host, user, password, mac, vlan):
 def remove_mac_second(host, user, password, mac, vlan):
     with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
         try:
-            confstr = ADD_MAC_ADDRESS % (mac, vlan, interface)
+            confstr = REMOVE_MAC_ADDRESS % (mac, vlan)
             rpc_obj = m.edit_config(target='running', config=confstr)
             _check_response(rpc_obj, 'REMOVE_MAC_ADDRESS')
         except Exception:
@@ -325,6 +331,8 @@ for node in allOFnodes['nodes']['node']:
                 for node_table_flow in node_table["flow"]:
                     try:
                         dest_mac = node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"]
+                        dest_mac = mac_corr1(dest_mac)
+                        print "dest mac = %s" % dest_mac
                         for x in range(0, len(manage)):
                             if node1 == manage[x]:
                                 for swi in all_list[x]:
@@ -332,6 +340,7 @@ for node in allOFnodes['nodes']['node']:
                                         add_mac(swi,user,password,dest_mac,prod_vlan)
                                         added_macs_temp = [swi,dest_mac]
                                         added_macs.append(added_macs_temp)
+                                        print "Added %s successfully to %s" % (dest_mac, swi)
                                     except Exception:
                                         print "Device %s can't use netconf" % swi
                     except Exception:
