@@ -160,7 +160,7 @@ def add_mac(host,user,password,mac,vlan):
 
 def remove_mac(host,user,password,mac,vlan):
     if __name__ == '__main__':
-        logging.basicConfig(level=logging.INFO)
+        logging.basicConfig(level=logging.ERROR)
         remove_mac_second(host,user,password, mac, vlan)
 
 h = httplib2.Http(".cache")
