@@ -250,6 +250,7 @@ for node in allOFnodes['nodes']['node']:
                 for node_connector in node['node-connector']:
                     if mac == node_connector['flow-node-inventory:hardware-address']:
                         node_list.append(OF)
+                    break
         except Exception:
             print "miss"
     for node_table in node['flow-node-inventory:table']:
