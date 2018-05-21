@@ -5,11 +5,35 @@ import easysnmp
 #import matplotlib.pyplot as plt
 import httplib2
 import json
+import sys
+import logging
+from ncclient import manager
+
+log = logging.getLogger(__name__)
 
 ip = '192.168.50.100'
 com = 'public'
 man_vlan = '500'
-OF_swi = []
+prod_vlan = "50"
+user = "admin"
+password = "cisco"
+added_macs = []
+
+ADD_MAC_ADDRESS = """
+<config>
+        <cli-config-data>
+            <cmd>mac address-table static %s vlan %s drop</cmd>
+        </cli-config-data>
+</config>
+"""
+
+REMOVE_MAC_ADDRESS = """
+<config>
+        <cli-config-data>
+            <cmd>no mac address-table static %s vlan %s drop</cmd>
+        </cli-config-data>
+</config>
+"""
 
 def get_ip_add(ip): # Pasiima kaimyu adresus is irenginio.
     session = easysnmp.Session(hostname=ip, version=2, community=com)
@@ -97,10 +121,48 @@ def mac_corr(string):
             break
     return string
 
+def _check_response(rpc_obj, snippet_name):
+    log.debug("RPCReply for %s is %s" % (snippet_name, rpc_obj.xml))
+    xml_str = rpc_obj.xml
+    if "<ok />" in xml_str:
+        log.info("%s successful" % snippet_name)
+    else:
+        log.error("Cannot successfully execute: %s" % snippet_name)
+
+def add_mac_second(host, user, password, mac, vlan):
+    with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
+        try:
+            confstr = ADD_MAC_ADDRESS % (mac, vlan, interface)
+            rpc_obj = m.edit_config(target='running', config=confstr)
+            _check_response(rpc_obj, 'ADD_MAC_ADDRESS')
+        except Exception:
+            log.exception("Exception in adding %s mac %s vlan" % (mac, vlan))
+
+def remove_mac_second(host, user, password, mac, vlan):
+    with manager.connect(host=host, port=22, username=user, password=password, hostkey_verify=False, allow_agent=False, look_for_keys=False) as m:
+        try:
+            confstr = ADD_MAC_ADDRESS % (mac, vlan, interface)
+            rpc_obj = m.edit_config(target='running', config=confstr)
+            _check_response(rpc_obj, 'REMOVE_MAC_ADDRESS')
+        except Exception:
+            log.exception("Exception in removing %s mac %s vlan" % (mac, vlan))
+
+def add_mac(host,user,password,mac,vlan)
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.INFO)
+        add_mac_second(host,user,password, mac, vlan)
+
+def remove_mac(host,user,password,mac,vlan)
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.INFO)
+        remove_mac_second(host,user,password, mac, vlan)
+
 h = httplib2.Http(".cache")
 h.add_credentials('admin', 'admin')
 resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
+
+OF_swi = []
 all_OF_node_ports = []
 all_OF_node_macs = []
 
@@ -235,11 +297,15 @@ for x in range(0, len(all_OF_node_macs)):
         except Exception as e:
             print "miss"
 
-src_mac = []
+
+for list1 in added_macs:
+    try:
+        remove_mac(list1[0],user,password,list1[1],prod_vlan)
+    except Exception:
+        print "Nothing to remove"
+
 dest_mac = []
-node_list = []
-tmp_src_mac = []
-tmp_dest_mac = []
+node1 = []
 
 for node in allOFnodes['nodes']['node']:
     for OF in OF_swi:
@@ -249,25 +315,28 @@ for node in allOFnodes['nodes']['node']:
                 mac = mac_corr(mac)
                 for node_connector in node['node-connector']:
                     if mac == node_connector['flow-node-inventory:hardware-address']:
-                        node_list.append(OF)
+                        node1 = OF
                     break
         except Exception:
             print "miss"
     for node_table in node['flow-node-inventory:table']:
         if node_table["id"] == 0:
-            tmp_src_mac = []
-            tmp_dest_mac = []
             try:
                 for node_table_flow in node_table["flow"]:
                     try:
-                        tmp_src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
-                        tmp_dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
+                        dest_mac = node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"]
+                        for x in range(0, len(manage)):
+                            if node1 == manage[x]:
+                                for swi in all_list[x]:
+                                    try:
+                                        add_mac(swi,user,password,dest_mac,prod_vlan)
+                                        added_macs_temp = [swi,dest_mac]
+                                        added_macs.append(added_macs_temp)
                     except Exception:
                         err = 0
             except Exception:
                 print "No flow entries in %s" % node["id"]
-    src_mac.append(tmp_src_mac)
-    dest_mac.append(tmp_dest_mac)
+
 
 
 print 'OpenFlow = ' + str(OF_swi)
@@ -277,7 +346,4 @@ print 'Manage = ' + str(manage)
 print 'all_list = ' + str(all_list)
 print 'tested = ' + str(tested)
 
-print "dest_mac = %s" % dest_mac
-print "src_mac = %s" % src_mac
-print "Node list = %s" % node_list
 
