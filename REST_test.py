@@ -95,25 +95,33 @@ allOFnodes = json.loads(content)
 
 src_mac = []
 dest_mac = []
+node_list = []
 
 for node in allOFnodes['nodes']['node']:
     for node_table in node['flow-node-inventory:table']:
+        node_list.append(node["id"])
         if node_table["id"] == 0:
+            tmp_src_mac = []
+            tmp_dest_mac = []
             try:
                 for node_table_flow in node_table["flow"]:
                     try:
-                        src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
-                        dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
+                        tmp_src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
+                        tmp_dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
                     except Exception:
                         err = 0
             except Exception:
                 print "No flow entries in %s" % node["id"]
+
+        src_mac.append(tmp_src_mac)
+        dest_mac.append(tmp_dest_mac)
 
 
 
 
 print "dest_mac = %s" % dest_mac
 print "src_mac = %s" % src_mac
+print "Node list = %s" % node_list
 
 
 
