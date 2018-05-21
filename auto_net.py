@@ -332,6 +332,8 @@ for node in allOFnodes['nodes']['node']:
                                         add_mac(swi,user,password,dest_mac,prod_vlan)
                                         added_macs_temp = [swi,dest_mac]
                                         added_macs.append(added_macs_temp)
+                                    except Exception:
+                                        print "Device %s can't use netconf" % swi
                     except Exception:
                         err = 0
             except Exception:
