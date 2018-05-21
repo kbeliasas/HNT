@@ -93,8 +93,23 @@ resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opend
 
 allOFnodes = json.loads(content)
 
+src_mac = []
+dest_mac = []
+
 for node in allOFnodes['nodes']['node']:
-    OF_node_macs = []
     for node_table in node['flow-node-inventory:table']:
-        print node_table
+        if node_table["id"] == 0:
+            try:
+                for node_table_flow in node_table["flow"]:
+                    try:
+                        src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
+                        dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
+
+
+
+
+print "dest_mac = %s" % dest_mac
+print "src_mac = %s" % src_mac
+
+
 
