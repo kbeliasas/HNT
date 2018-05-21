@@ -104,6 +104,8 @@ for node in allOFnodes['nodes']['node']:
                     try:
                         src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
                         dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
+                    except Exception:
+                        err = 0
             except Exception:
                 print "No flow entries in %s" % node["id"]
 
