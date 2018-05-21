@@ -209,7 +209,6 @@ while (x > -1):
                                 temp_list.append(get_man_ip_add(item))
                         all_list.append(temp_list)
                     if (len(all_list[x]) > y + 1):
-                        print "len of all_list[x]=" + str(len(all_list[x]))
                         y = y + 1
                         z = 0
                     elif (len(all_list[x]) <= y + 1):
@@ -218,7 +217,6 @@ while (x > -1):
                             y = 0
                             z = 0
                         elif (len(all_list) <= x + 1):
-                            print "len of all_list="+str(len(all_list))
                             x = -2
                             y = -2
                             z = -2
