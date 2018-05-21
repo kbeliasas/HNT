@@ -96,6 +96,8 @@ allOFnodes = json.loads(content)
 src_mac = []
 dest_mac = []
 node_list = []
+tmp_src_mac = []
+tmp_dest_mac = []
 
 for node in allOFnodes['nodes']['node']:
     for node_table in node['flow-node-inventory:table']:
