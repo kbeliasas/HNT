@@ -168,114 +168,51 @@ h.add_credentials('admin', 'admin')
 resp, content = h.request('http://192.168.50.254:8181/restconf/operational/opendaylight-inventory:nodes', "GET")
 
 
-OF_swi = []
-all_OF_node_ports = []
-all_OF_node_macs = []
+while True:
+    OF_swi = []
+    all_OF_node_ports = []
+    all_OF_node_macs = []
 
-allOFnodes = json.loads(content)
+    allOFnodes = json.loads(content)
 
-for node in allOFnodes['nodes']['node']:
-    OF_node_macs = []
-    for node_connector in node['node-connector']:
-        OF_node_macs.append(node_connector['flow-node-inventory:hardware-address'])
-    all_OF_node_macs.append(OF_node_macs)
+    for node in allOFnodes['nodes']['node']:
+        OF_node_macs = []
+        for node_connector in node['node-connector']:
+            OF_node_macs.append(node_connector['flow-node-inventory:hardware-address'])
+        all_OF_node_macs.append(OF_node_macs)
 
-tested = []
-tested.append(ip)
-manage = []
-manage.append(get_man_ip_add(ip))
-if ip != get_man_ip_add(ip):
-    ip = get_man_ip_add(ip)
+    tested = []
     tested.append(ip)
-all_list = []
-temp_list = []
-for item in get_ip_add(ip):
-    if get_man_ip_add(item) == 'failed':
-        print "1"
-        temp_list.append(item)
-        tested.append(item)
-    elif get_man_ip_add(item) == None:
-        print "2"
-        print str(item) + " Don't have man VLAN"
-        temp_list.append(item)
-        tested.append(item)
-    else:
-        temp_list.append(get_man_ip_add(item))
-all_list.append(temp_list)
+    manage = []
+    manage.append(get_man_ip_add(ip))
+    if ip != get_man_ip_add(ip):
+        ip = get_man_ip_add(ip)
+        tested.append(ip)
+    all_list = []
+    temp_list = []
+    for item in get_ip_add(ip):
+        if get_man_ip_add(item) == 'failed':
+            print "1"
+            temp_list.append(item)
+            tested.append(item)
+        elif get_man_ip_add(item) == None:
+            print "2"
+            print str(item) + " Don't have man VLAN"
+            temp_list.append(item)
+            tested.append(item)
+        else:
+            temp_list.append(get_man_ip_add(item))
+    all_list.append(temp_list)
 
 
-x = 0
-y = 0
-z = 0
-while (x > -1):
-    while (y > -1):
-        while (z > -1):
-            #time.sleep(5)
-            if (all_list[x][y] == tested[z]):
-                if (len(all_list[x]) > y + 1):
-                    y = y + 1
-                    z = 0
-                elif (len(all_list[x]) <= y + 1):
-                    if (len(all_list) > x + 1):
-                        x = x + 1
-                        y = 0
-                        z = 0
-                    elif (len(all_list) <= x + 1):
-                        x = -2
-                        y = -2
-                        z = -2
-                        break
-            elif (all_list[x][y] != tested[z]):
-                if (len(tested) > z + 1):
-                    z = z + 1
-                elif (len(tested) <= z + 1):
-                    ip = all_list[x][y]
-                    if ip != get_man_ip_add(ip):
-                        b = 0
-                        while (b > -1):
-                            print 'b = ' + str(b)
-                            print "manage = " + str(manage[b])
-                            print "get_man_ip_add(ip) = " + str(get_man_ip_add(ip))
-                            if manage[b] == get_man_ip_add(ip):
-                                tested.append(ip)
-                                b = -2
-                                break
-                            elif manage[b] != get_man_ip_add(ip):
-                                if (len(manage) > b + 1 ):
-                                    b = b + 1
-                                elif (len(manage) <= b + 1):
-                                    tested.append(ip)
-                                    tested.append(get_man_ip_add(ip))
-                                    manage.append(get_man_ip_add(ip))
-                                    temp_list = []
-                                    for item in get_ip_add(ip):
-                                        if get_man_ip_add(item) == 'failed':
-                                            temp_list.append(item)
-                                            tested.append(item)
-                                        elif get_man_ip_add(item) == None:
-                                            temp_list.append(item)
-                                            tested.append(item)
-                                            print str(item) + "Don't have man VLAN"
-                                        else:
-                                            temp_list.append(get_man_ip_add(item))
-                                    all_list.append(temp_list)
-                                    b = -2
-                                    break
-                    elif ip == get_man_ip_add(ip):
-                        tested.append(ip)
-                        manage.append(ip)
-                        temp_list = []
-                        for item in get_ip_add(ip):
-                            if get_man_ip_add(item) == 'failed':
-                                temp_list.append(item)
-                                tested.append(item)
-                            elif get_man_ip_add(item) == None:
-                                temp_list.append(item)
-                                tested.append(item)
-                                print str(item) + "Don't have man VLAN"
-                            else:
-                                temp_list.append(get_man_ip_add(item))
-                        all_list.append(temp_list)
+    x = 0
+    y = 0
+    z = 0
+    while (x > -1):
+        while (y > -1):
+            while (z > -1):
+                #time.sleep(5)
+                if (all_list[x][y] == tested[z]):
                     if (len(all_list[x]) > y + 1):
                         y = y + 1
                         z = 0
@@ -289,72 +226,138 @@ while (x > -1):
                             y = -2
                             z = -2
                             break
+                elif (all_list[x][y] != tested[z]):
+                    if (len(tested) > z + 1):
+                        z = z + 1
+                    elif (len(tested) <= z + 1):
+                        ip = all_list[x][y]
+                        if ip != get_man_ip_add(ip):
+                            b = 0
+                            while (b > -1):
+                                print 'b = ' + str(b)
+                                print "manage = " + str(manage[b])
+                                print "get_man_ip_add(ip) = " + str(get_man_ip_add(ip))
+                                if manage[b] == get_man_ip_add(ip):
+                                    tested.append(ip)
+                                    b = -2
+                                    break
+                                elif manage[b] != get_man_ip_add(ip):
+                                    if (len(manage) > b + 1 ):
+                                        b = b + 1
+                                    elif (len(manage) <= b + 1):
+                                        tested.append(ip)
+                                        tested.append(get_man_ip_add(ip))
+                                        manage.append(get_man_ip_add(ip))
+                                        temp_list = []
+                                        for item in get_ip_add(ip):
+                                            if get_man_ip_add(item) == 'failed':
+                                                temp_list.append(item)
+                                                tested.append(item)
+                                            elif get_man_ip_add(item) == None:
+                                                temp_list.append(item)
+                                                tested.append(item)
+                                                print str(item) + "Don't have man VLAN"
+                                            else:
+                                                temp_list.append(get_man_ip_add(item))
+                                        all_list.append(temp_list)
+                                        b = -2
+                                        break
+                        elif ip == get_man_ip_add(ip):
+                            tested.append(ip)
+                            manage.append(ip)
+                            temp_list = []
+                            for item in get_ip_add(ip):
+                                if get_man_ip_add(item) == 'failed':
+                                    temp_list.append(item)
+                                    tested.append(item)
+                                elif get_man_ip_add(item) == None:
+                                    temp_list.append(item)
+                                    tested.append(item)
+                                    print str(item) + "Don't have man VLAN"
+                                else:
+                                    temp_list.append(get_man_ip_add(item))
+                            all_list.append(temp_list)
+                        if (len(all_list[x]) > y + 1):
+                            y = y + 1
+                            z = 0
+                        elif (len(all_list[x]) <= y + 1):
+                            if (len(all_list) > x + 1):
+                                x = x + 1
+                                y = 0
+                                z = 0
+                            elif (len(all_list) <= x + 1):
+                                x = -2
+                                y = -2
+                                z = -2
+                                break
 
 
-for x in range(0, len(all_OF_node_macs)):
-    for y in range(0, len(manage)):
-        try:
-            macs = get_port_macs(manage[y])
-            for mac in macs:
-                mac = mac_corr(mac)
-                if (mac == all_OF_node_macs[x][0]):
-                    OF_swi.append(manage[y])
-                    break
-        except Exception as e:
-            print "miss"
-
-
-for list1 in added_macs:
-    try:
-        remove_mac(list1[0],user,password,list1[1],prod_vlan)
-    except Exception:
-        print "Nothing to remove"
-
-dest_mac = []
-node1 = []
-
-for node in allOFnodes['nodes']['node']:
-    for OF in OF_swi:
-        try:
-            macs = get_port_macs(OF)
-            for mac in macs:
-                mac = mac_corr(mac)
-                for node_connector in node['node-connector']:
-                    if mac == node_connector['flow-node-inventory:hardware-address']:
-                        node1 = OF
-                    break
-        except Exception:
-            print "miss"
-    for node_table in node['flow-node-inventory:table']:
-        if node_table["id"] == 0:
+    for x in range(0, len(all_OF_node_macs)):
+        for y in range(0, len(manage)):
             try:
-                for node_table_flow in node_table["flow"]:
-                    try:
-                        dest_mac = node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"]
-                        dest_mac = mac_corr1(dest_mac)
-                        print "dest mac = %s" % dest_mac
-                        for x in range(0, len(manage)):
-                            if node1 == manage[x]:
-                                for swi in all_list[x]:
-                                    try:
-                                        add_mac(swi,user,password,dest_mac,prod_vlan)
-                                        added_macs_temp = [swi,dest_mac]
-                                        added_macs.append(added_macs_temp)
-                                        print "Added %s successfully to %s" % (dest_mac, swi)
-                                    except Exception:
-                                        print "Device %s can't use netconf" % swi
-                    except Exception:
-                        err = 0
+                macs = get_port_macs(manage[y])
+                for mac in macs:
+                    mac = mac_corr(mac)
+                    if (mac == all_OF_node_macs[x][0]):
+                        OF_swi.append(manage[y])
+                        break
+            except Exception as e:
+                print "miss"
+
+
+    for list1 in added_macs:
+        try:
+            remove_mac(list1[0],user,password,list1[1],prod_vlan)
+            print "removed mac %s form %s" % (list1[1], list1[0])
+        except Exception:
+            print "Nothing to remove"
+
+    added_macs = []
+    dest_mac = []
+    node1 = []
+
+    for node in allOFnodes['nodes']['node']:
+        for OF in OF_swi:
+            try:
+                macs = get_port_macs(OF)
+                for mac in macs:
+                    mac = mac_corr(mac)
+                    for node_connector in node['node-connector']:
+                        if mac == node_connector['flow-node-inventory:hardware-address']:
+                            node1 = OF
+                        break
             except Exception:
-                print "No flow entries in %s" % node["id"]
+                print "miss"
+        for node_table in node['flow-node-inventory:table']:
+            if node_table["id"] == 0:
+                try:
+                    for node_table_flow in node_table["flow"]:
+                        try:
+                            dest_mac = node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"]
+                            dest_mac = mac_corr1(dest_mac)
+                            print "dest mac = %s" % dest_mac
+                            for x in range(0, len(manage)):
+                                if node1 == manage[x]:
+                                    for swi in all_list[x]:
+                                        try:
+                                            add_mac(swi,user,password,dest_mac,prod_vlan)
+                                            added_macs_temp = [swi,dest_mac]
+                                            added_macs.append(added_macs_temp)
+                                            print "Added %s successfully to %s" % (dest_mac, swi)
+                                        except Exception:
+                                            print "Device %s can't use netconf" % swi
+                        except Exception:
+                            err = 0
+                except Exception:
+                    print "No flow entries in %s" % node["id"]
 
 
 
-print 'OpenFlow = ' + str(OF_swi)
+    print 'OpenFlow = ' + str(OF_swi)
+    print "added_macs =  %s" % added_macs
 
-
-print 'Manage = ' + str(manage)
-print 'all_list = ' + str(all_list)
-print 'tested = ' + str(tested)
+    print 'Manage = ' + str(manage)
+    print 'all_list = ' + str(all_list)
+    print 'tested = ' + str(tested)
 
 
