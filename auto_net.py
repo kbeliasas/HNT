@@ -237,6 +237,39 @@ for x in range(0, len(all_OF_node_macs)):
         except Exception as e:
             print "miss"
 
+src_mac = []
+dest_mac = []
+node_list = []
+tmp_src_mac = []
+tmp_dest_mac = []
+
+for node in allOFnodes['nodes']['node']:
+    for OF in OF_swi:
+        try:
+            macs = get_port_macs(OF)
+            for mac in macs:
+                mac = mac_corr(mac)
+                for node_connector in node['node-connector']:
+                    if mac == node_connector['flow-node-inventory:hardware-address']:
+                        node_list.append(OF)
+        except Exception:
+            print "miss"
+    for node_table in node['flow-node-inventory:table']:
+        if node_table["id"] == 0:
+            tmp_src_mac = []
+            tmp_dest_mac = []
+            try:
+                for node_table_flow in node_table["flow"]:
+                    try:
+                        tmp_src_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-source"]["address"])
+                        tmp_dest_mac.append(node_table_flow["match"]["ethernet-match"]["ethernet-destination"]["address"])
+                    except Exception:
+                        err = 0
+            except Exception:
+                print "No flow entries in %s" % node["id"]
+    src_mac.append(tmp_src_mac)
+    dest_mac.append(tmp_dest_mac)
+
 
 print 'OpenFlow = ' + str(OF_swi)
 
