@@ -278,3 +278,7 @@ print 'Manage = ' + str(manage)
 print 'all_list = ' + str(all_list)
 print 'tested = ' + str(tested)
 
+print "dest_mac = %s" % dest_mac
+print "src_mac = %s" % src_mac
+print "Node list = %s" % node_list
+
