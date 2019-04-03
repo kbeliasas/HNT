@@ -191,7 +191,7 @@ while (x > -1):
                         for a in range(0, len(ip_add)):
                             device_list.append(ip_add[a])
                             all_ports_topology.append(port_list[a])
-                            port_list1.append(port_list[x])
+                            port_list1.append(port_list[a])
                         device_nei.append(device_list)
                         device_nei_ports.append(port_list1)
                         tested.append(ip)
@@ -316,7 +316,7 @@ while(a > 0):
                             for a in range(0, len(ip_add)):
                                 device_list.append(ip_add[a])
                                 all_ports_topology.append(port_list[a])
-                                port_list1.append(port_list[x])
+                                port_list1.append(port_list[a])
                             new_device_nei.append(device_list)
                             new_device_nei_ports.append(port_list1)
                             new_tested.append(ip)
